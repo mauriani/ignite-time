@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import { ThemeProvider } from "styled-components";
 import { GlobalStyle } from "./styles/global";
 
