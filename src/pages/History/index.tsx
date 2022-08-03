@@ -8,10 +8,12 @@ export function History() {
       <HistoryList>
         <table>
           <thead>
-            <th>Tarefa</th>
-            <th>Duração</th>
-            <th>Início</th>
-            <th>Status</th>
+            <tr>
+              <th>Tarefa</th>
+              <th>Duração</th>
+              <th>Início</th>
+              <th>Status</th>
+            </tr>
           </thead>
 
           <tbody>
