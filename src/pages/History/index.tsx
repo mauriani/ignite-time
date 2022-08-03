@@ -19,6 +19,35 @@ export function History() {
               <td>Tarefa</td>
               <td>20 minutos</td>
               <td>Há cerca de 2 minutos</td>
+              <td>Concluído</td>
+            </tr>
+
+            <tr>
+              <td>Tarefa</td>
+              <td>20 minutos</td>
+              <td>Há cerca de 2 minutos</td>
+              <td>Concluído</td>
+            </tr>
+
+            <tr>
+              <td>Tarefa</td>
+              <td>20 minutos</td>
+              <td>Há cerca de 2 minutos</td>
+              <td>Concluído</td>
+            </tr>
+
+            <tr>
+              <td>Tarefa</td>
+              <td>20 minutos</td>
+              <td>Há cerca de 2 minutos</td>
+              <td>Concluído</td>
+            </tr>
+
+            <tr>
+              <td>Tarefa</td>
+              <td>20 minutos</td>
+              <td>Há cerca de 2 minutos</td>
+              <td>Concluído</td>
             </tr>
           </tbody>
         </table>
