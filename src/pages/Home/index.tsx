@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Play } from "phosphor-react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as zod from "zod";
+import { differenceInSeconds } from "date-fns";
 
 import {
   HomeContainer,
@@ -25,6 +26,7 @@ interface Cycle {
   id: string;
   task: string;
   minutesAmount: number;
+  startDate: Date;
 }
 
 export function Home() {
@@ -51,15 +53,37 @@ export function Home() {
       id,
       task: data.task,
       minutesAmount: data.minutesAmount,
+      startDate: new Date(),
     };
 
     setCycles((state) => [...state, newCycle]);
     setActiveCycleId(id);
+    setAmountSecondsPassed(0);
     // limpa os campos do formulário de acordo com defaultValues
     reset();
   }
+
   // guarda as informações da task ativa
   const activeCycle = cycles.find((cycle) => cycle.id === activeCycleId);
+
+  // agora precisamos reduzir o temp - amountSecondsPassed
+  useEffect(() => {
+    let interval: number;
+    // se tiver um ciclo ativo, differenceInSeconds usado pois o set interval passa com um valor aproximado e nao exato
+    if (activeCycle) {
+      interval = setInterval(() => {
+        // pego a data atual e comparo com a data de criação da task, assim consigo verificar quantos segundos passaram
+        setAmountSecondsPassed(
+          differenceInSeconds(new Date(), activeCycle.startDate)
+        );
+      }, 1000);
+    }
+
+    // Essa função serve para "limpar" o que eu estava fazendo no useEffect anterior
+    return () => {
+      clearInterval(interval);
+    };
+  }, [activeCycle]);
 
   // guarda os segundos da task ativa
   const totalSeconds = activeCycle ? activeCycle.minutesAmount * 60 : 0;
@@ -67,12 +91,17 @@ export function Home() {
   // guarda os seconds que se passaram
   const currentSeconds = activeCycle ? totalSeconds - amountSecondsPassed : 0;
 
+  // exibe os valores de minutos e segundos
   const minutesAmount = Math.floor(currentSeconds / 60);
   const secondsAmount = currentSeconds % 60;
 
   // preenche a minha string caso não tenha outro, ou seja meu numero vai ficar 09
   const minutes = String(minutesAmount).padStart(2, "0");
   const seconds = String(secondsAmount).padStart(2, "0");
+
+  useEffect(() => {
+    if (activeCycle) document.title = `${minutes}:${seconds}`;
+  }, [activeCycle, minutes, seconds]);
 
   const task = watch("task");
   const isSubmitDisabled = !task;
