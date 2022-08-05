@@ -20,24 +20,6 @@ const newCycleFormValidationSchema = zod.object({
 
 type NewCycleFormData = zod.infer<typeof newCycleFormValidationSchema>;
 
-interface Cycle {
-  id: string;
-  task: string;
-  minutesAmount: number;
-  startDate: Date;
-  interruptedDate?: Date;
-  finishedDate?: Date;
-}
-
-interface CyclesContextType {
-  activeCycle: Cycle | undefined;
-  activeCycleId: string | null;
-  markCurrentCycleAsFinished: () => void;
-  markCycleAsNull: () => void;
-  amountSecondsPassed: number;
-  setSecondsPassed: (seconds: number) => void;
-}
-
 export function Home() {
   const { createNewCycle, interruptCurrentCycle, activeCycle } =
     useContext(CycleContext);
