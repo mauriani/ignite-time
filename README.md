@@ -1,6 +1,6 @@
 # Ignite Timer ⏰
 
-<img src="https://s3-us-west-2.amazonaws.com/secure.notion-static.com/dda4d9d8-1d1f-4494-80a3-a8cbe8bab619/Untitled.png"/>
+<img src="https://user-images.githubusercontent.com/32397288/183467598-38f16b0e-e6af-431a-86b1-aaf6c9712ce5.PNG"/>
 
 ## Sobre o projeto 🚀
 
