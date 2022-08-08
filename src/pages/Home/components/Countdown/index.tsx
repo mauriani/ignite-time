@@ -8,7 +8,6 @@ export function Countdown() {
     activeCycle,
     activeCycleId,
     markCurrentCycleAsFinished,
-    markCycleAsNull,
     amountSecondsPassed,
     setSecondsPassed,
   } = useContext(CycleContext);
@@ -40,14 +39,13 @@ export function Countdown() {
         // pego a data atual e comparo com a data de criação da task, assim consigo verificar quantos segundos passaram
         const secondsDifference = differenceInSeconds(
           new Date(),
-          activeCycle.startDate
+          new Date(activeCycle.startDate)
         );
 
         if (secondsDifference >= totalSeconds) {
           markCurrentCycleAsFinished();
           setSecondsPassed(totalSeconds);
           clearInterval(interval);
-          markCycleAsNull();
         } else {
           setSecondsPassed(secondsDifference);
         }
@@ -58,13 +56,7 @@ export function Countdown() {
     return () => {
       clearInterval(interval);
     };
-  }, [
-    activeCycle,
-    totalSeconds,
-    activeCycleId,
-    markCurrentCycleAsFinished,
-    markCycleAsNull,
-  ]);
+  }, [activeCycle, totalSeconds, activeCycleId, markCurrentCycleAsFinished]);
 
   return (
     <CountdownContainer>

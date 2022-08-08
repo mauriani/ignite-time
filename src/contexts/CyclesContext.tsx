@@ -1,4 +1,11 @@
-import { createContext, useState, ReactNode, useReducer } from "react";
+import {
+  createContext,
+  useState,
+  ReactNode,
+  useReducer,
+  useEffect,
+} from "react";
+import { differenceInSeconds } from "date-fns";
 
 import { Cycle, cyclesReducer } from "../reducers/cycles/reducer";
 import {
@@ -33,17 +40,41 @@ interface CyclesContextProviderProps {
 export function CyclesContextProvider({
   children,
 }: CyclesContextProviderProps) {
-  const [cyclesState, dispatch] = useReducer(cyclesReducer, {
-    cycles: [],
-    activeCycleId: null,
-  });
+  const [cyclesState, dispatch] = useReducer(
+    cyclesReducer,
+    {
+      cycles: [],
+      activeCycleId: null,
+    },
+    () => {
+      const storedStateAsJSON = localStorage.getItem(
+        "@ignite-timer:cycles-state-1.0.0"
+      );
 
-  // guarda o tanto de segundos que passou desde que a task foi criada
-  const [amountSecondsPassed, setAmountSecondsPassed] = useState(0);
+      if (storedStateAsJSON) {
+        return JSON.parse(storedStateAsJSON);
+      }
+    }
+  );
 
   const { cycles, activeCycleId } = cyclesState;
+
   // guarda as informações da task ativa
   const activeCycle = cycles.find((cycle) => cycle.id === activeCycleId);
+
+  // guarda o tanto de segundos que passou desde que a task foi criada
+  const [amountSecondsPassed, setAmountSecondsPassed] = useState(() => {
+    if (activeCycle) {
+      return differenceInSeconds(new Date(), new Date(activeCycle.startDate));
+    }
+    return 0;
+  });
+
+  useEffect(() => {
+    const stateJSON = JSON.stringify(cyclesState);
+
+    localStorage.setItem("@ignite-timer:cycles-state-1.0.0", stateJSON);
+  }, [cyclesState]);
 
   function markCurrentCycleAsFinished() {
     dispatch(markCurrentCycleAsFinishedAction());
