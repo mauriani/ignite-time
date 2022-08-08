@@ -36,6 +36,7 @@ export function Home() {
   const { handleSubmit, watch, reset } = newCycleForm;
 
   function handleCreateNewCycle(data: NewCycleFormData) {
+    console.log(createNewCycle);
     createNewCycle(data);
     // limpa os campos do formulário de acordo com defaultValues
     reset();
